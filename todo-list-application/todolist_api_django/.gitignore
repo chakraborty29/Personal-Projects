@@ -1,0 +1,9 @@
+*.pyc
+__pycache__
+.DS_Store
+db.sqlite3
+staticfiles
+.env.dev
+.env.prod
+.env.prod.db
+django.pem

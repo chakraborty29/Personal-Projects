@@ -1,0 +1,31 @@
+stages:
+  - build
+  - deploy
+
+build:
+  image: node:14.17.0
+  stage: build
+  script:
+    # Install vuecli
+    - npm install -g @vue/cli@4.5.13
+    # Install dependencies
+    - npm install
+    # Build App
+    - npm run build
+  artifacts:
+    paths:
+      # Build folder
+      - dist/
+    expire_in: 1 hour
+  only:
+    - main
+
+deploy:
+  image: python:latest
+  stage: deploy
+  script:
+    - echo $VUE_APP_API_URL
+    - pip install awscli
+    - aws s3 sync ./dist s3://$S3_BUCKET_NAME
+  only:
+    - main
